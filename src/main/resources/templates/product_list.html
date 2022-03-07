@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Product</title>
+</head>
+<body>
+ <div layout:fragment="content">
+        <p>Welcome to Thymeleaf Layout Dialect</p>
+	<!--  <div id="inventory_list" th:fragment="f_inventory_list">-->
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Code</th>
+					<th scope="col">Name</th>
+					<th scope="col">Cost</th>
+					<th scope="col">Quantity</th>
+					<th scope="col">Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${Products.empty}">
+					<td colspan="5">No Products Available</td>
+				</tr>
+				<tr th:each="product : ${Products}">
+					<td th:text="${product.code}">Code</td>
+					<td th:text="${product.name}">Name</td>
+					<td th:text="${product.cost}">Cost</td>
+					<td th:text="${product.quantity}">Quantity</td>
+					<td th:text="${product.value}">Value</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
