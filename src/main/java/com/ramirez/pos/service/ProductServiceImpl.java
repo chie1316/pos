@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ramirez.pos.dto.ProductDto;
 import com.ramirez.pos.entity.Product;
+import com.ramirez.pos.projection.ProductView;
 import com.ramirez.pos.repository.ProductRepository;
 
 @Service
@@ -33,18 +36,20 @@ public class ProductServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public List<Product> getProductList() {
-		return productRepo.findAll();
+	public Page<ProductView> getProductList(Pageable pageable) {
+
+		return productRepo.getProductList(pageable);
 	}
 
 	@Override
-	public Product getProductById(String id) {
+	public ProductDto getProductById(String id) {
 		Optional<Product> op = productRepo.findById(id);
 
 		if (op.isPresent()) {
-			return op.get();
+			Product product = op.get();
+			return new ProductDto(product.getId(), product.getName(), product.getCode(), product.getCost(),
+					product.getQuantity(), product.getPrice());
 		}
-
 		return null;
 	}
 

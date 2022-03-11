@@ -1,13 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-<meta charset="ISO-8859-1">
-<title>Product</title>
-<link rel="stylesheet" type="text/css" media="all"
-	th:href="@{/css/bootstrap.min.css}" />
-</head>
-<body>
-<p>TESTING!!!!</p>
 
+<head>
+<meta charset="UTF-8">
+<title>Product</title>
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/mystylesheet.css}" href="../static/css/mystylesheet.css" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/myscript.js}"></script>
+</head>
+
+<body>
+	<div class="col-md-8 mx-auto">
+
+		<!-- Product Table -->
+		<div class="card m-3">
+			<div class="card-header">
+				<h3 class="card-title float-left">Product List</h3>
+				<a class="btn btn-primary text-white eBtn float-right">Add Product</a>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body p-0">
+				<div class="table-responsive">
+					<table class="table m-0 text-center" aria-describedby="product-list">
+						<thead>
+							<tr>
+								<th>Code</th>
+								<th>Name</th>
+								<th>Cost</th>
+								<th>Quantity</th>
+								<th>Price</th>
+								<th colspan="2">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="${productList.empty}">
+								<td colspan="6">No Products Available</td>
+							</tr>
+							<tr th:each="productDto : ${productList}" th:id="${productDto.id}">
+								<td><span th:text="${productDto.code}"> CODE </span></td>
+								<td><span th:text="${productDto.name}"> NAME </span></td>
+								<td><span th:text="${productDto.cost}"> COST </span></td>
+								<td><span th:text="${productDto.quantity}"> QTY </span></td>
+								<td><span th:text="${productDto.price}"> PRICE </span></td>
+								<td><span> <a class="btn btn-primary text-white eBtn">Edit</a>
+								</span></td>
+								<td><span> <a class="btn btn-danger text-white dBtn">Delete</a>
+								</span></td>
+							</tr>
+						</tbody>
+					</table>
+					<ul class="nav nav-pills m-3">
+						<li class="nav-item" th:each="i : ${#numbers.sequence(0,productList.totalPages-1)}"><a th:href="@{/product/(page=${i})}" th:text="${i}" class="nav-link"
+							th:classappend="${currentPage}==${i}?'active':''"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- Create or Update Product Form -->
+		<div class="createOrUpdateProductForm">
+			<form method="post" th:action="@{/product}" th:object="${addProductDto}">
+				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Update or Create</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="product_name" class="col-form-label">Name</label> <input required type="text" class="form-control" id="product_name" name="product_name" value="" />
+								</div>
+
+								<div class="form-group">
+									<label for="product_code" class="col-form-label">Code</label> <input required type="text" class="form-control" id="product_code" name="product_code" value="" />
+								</div>
+
+								<div class="form-group">
+									<label for="product_cost" class="col-form-label">Cost</label> <input required type="number" step="0.01" min="0" class="form-control" id="product_cost" name="product_cost" value="" />
+								</div>
+
+								<div class="form-group">
+									<label for="product_qty" class="col-form-label">Quantity</label> <input required type="number" min="0" class="form-control" id="product_qty" name="product_qty" value="" />
+								</div>
+
+								<div class="form-group">
+									<label for="product_price" class="col-form-label">Price</label> <input required type="number" step="0.01" min="0" class="form-control" id="product_price" name="product_price" value="" />
+								</div>
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<input type="submit" class="btn btn-primary" value="save" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
 </body>
+
 </html>

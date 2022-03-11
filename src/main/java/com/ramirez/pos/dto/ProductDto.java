@@ -1,21 +1,46 @@
 package com.ramirez.pos.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
+import com.ramirez.pos.validation.CustomDecimalConstraint;
+import com.ramirez.pos.validation.CustomIntegerConstraint;
 
 public class ProductDto {
 
-	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String id;
 
+	@NotBlank(message = "Product Name is required!")
 	private String name;
 
+	@NotBlank(message = "Product Code is required!")
 	private String code;
 
-	private double cost;
+	@CustomDecimalConstraint(message = "Enter a valid Product Cost!")
+	@Min(value = 0L)
+	private Double cost;
 
-	private int quantity;
+	@CustomIntegerConstraint(message = "Enter a valid Product Quantity!")
+	@Min(value = 0L)
+	private Integer quantity;
 
-	private double price;
+	@CustomDecimalConstraint(message = "Enter a valid Product Price!")
+	@Min(value = 0L)
+	private Double price;
+
+	public ProductDto(String id, String name, String code, Double cost, Integer quantity, Double price) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.code = code;
+		this.cost = cost;
+		this.quantity = quantity;
+		this.price = price;
+	}
+
+	public ProductDto() {
+		super();
+	}
 
 	public String getId() {
 		return id;
@@ -41,27 +66,27 @@ public class ProductDto {
 		this.code = code;
 	}
 
-	public double getCost() {
+	public Double getCost() {
 		return cost;
 	}
 
-	public void setCost(double cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

@@ -1,17 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-	<div id="add_product" th:fragment="f_add_product">
-		<form method="post" action="#" th:action="@{/product}"
-			th:object="${productDto}">
-			<input id="product_name" placeholder="Product Name" required
-				type="text" th:field="*{name}" /> <input id="product_code"
-				placeholder="Product Code" required type="text" th:field="*{code}" />
-			<input id="product_cost" placeholder="Product Cost" required
-				type="text" th:field="*{cost}" /> <input id="product_qty"
-				placeholder="Product Qty." required type="text"
-				th:field="*{quantity}" /> <input id="product_price"
-				placeholder="Product Price" required type="text" th:field="*{price}" />
-			<input type="submit" value="Add Product">
-		</form>
+
+<head>
+<meta charset="UTF-8">
+<title>Product</title>
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}" />
+
+<style type="text/css">
+.error {
+	color: red
+}
+</style>
+</head>
+
+<body>
+	<div class="col-md-6">
+		<!-- general form elements -->
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Quick Example</h3>
+			</div>
+			<!-- /.card-header -->
+			<!-- form start -->
+			<form method="post" action="#" th:action="@{/product/add-product}" th:object="${productDto}">
+				<div class="card-body">
+					<div class="form-group">
+						<label for="product_name">Product Name</label> <input id="product_name" class="form-control" placeholder="Enter Product Name" required type="text" th:field="*{name}" />
+					</div>
+
+					<div class="form-group">
+						<label for="product_code">Product Code</label> <input id="product_code" class="form-control" placeholder="Enter Product Code" required type="text" th:field="*{code}" />
+					</div>
+
+					<div class="form-group">
+						<label for="product_cost">Product Cost</label> <input id="product_cost" class="form-control" placeholder="Enter Product Cost" required type="text" th:field="*{cost}" />
+						<p th:if="${#fields.hasErrors('cost')}" th:errorclass="error" th:errors="*{cost}" />
+					</div>
+
+					<div class="form-group">
+						<label for="product_qty">Product Quantity</label> <input id="product_qty" class="form-control" placeholder="Enter Product Qty." required type="text" th:field="*{quantity}" />
+					</div>
+
+					<div class="form-group">
+						<label for="product_price">Product Price</label> <input id="product_price" class="form-control" placeholder="Enter Product Price" required type="text" th:field="*{price}" />
+					</div>
+				</div>
+				<!-- /.card-body -->
+
+				<div class="card-footer">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.card -->
 	</div>
+</body>
+
 </html>
